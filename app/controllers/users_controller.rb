@@ -15,8 +15,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    # require "pry";binding.pry
-    if User.exists?
+    if current_user
+      #User.exists? also works
       @user = current_user
       @invited = ViewingParty.invited(@user)
     else

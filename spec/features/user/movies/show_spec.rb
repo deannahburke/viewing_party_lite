@@ -4,17 +4,29 @@ RSpec.describe "Movie details/show page", type: :feature do
   before :each do
     @user1 = User.create!(name: 'Sai', email: 'SaiLent@overlord.com', password: 'haisall123')
     @user2 = User.create!(name: 'Parker', email: 'GriffithDidNothing@Wrong.com', password: 'parkersbeard')
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
   end
 
   it 'has button to create a viewing party', :vcr do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+
     visit "/movies/238"
 
     expect(page).to have_button("Create Viewing Party")
     expect(page).to have_button("Discover Page")
   end
 
+  it 'cannot create a movie party unless logged in', :vcr do
+    visit "/movies/238"
+
+    click_button("Create Viewing Party")
+    
+    expect(current_path).to eq("/movies/238")
+    expect(page).to have_content("You must be logged in or registered to create a viewing party")
+  end
+
   it 'discover page button routes to discover page', :vcr do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+
     visit "/movies/238"
 
     click_button("Discover Page")
@@ -23,6 +35,7 @@ RSpec.describe "Movie details/show page", type: :feature do
   end
 
   it 'create viewing party button routes to new viewing party page', :vcr do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     visit "/movies/238"
 
     click_button("Create Viewing Party")
@@ -31,6 +44,7 @@ RSpec.describe "Movie details/show page", type: :feature do
   end
 
   it 'displays movie details', :vcr do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     godfather = MovieFacade.create_movie_details(238)
 
     visit "/movies/238"
@@ -43,6 +57,7 @@ RSpec.describe "Movie details/show page", type: :feature do
   end
 
   it 'displays cast details', :vcr do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     godfather_cast = MovieFacade.create_cast(238)
 
     visit "/movies/238"
@@ -52,6 +67,7 @@ RSpec.describe "Movie details/show page", type: :feature do
   end
 
   it 'displays 10 cast members', :vcr do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
 
     visit "/movies/238"
 
