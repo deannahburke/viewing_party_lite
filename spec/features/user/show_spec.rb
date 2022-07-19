@@ -31,7 +31,7 @@ RSpec.describe "User Dash/Show page", type: :feature do
 
     click_button("Discover Movies")
 
-    expect(current_path).to eq("/users/#{@user2.id}/discover")
+    expect(current_path).to eq("/discover")
     expect(current_path).to_not eq("/dashboard")
   end
 

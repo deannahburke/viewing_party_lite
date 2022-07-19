@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post '/login', to: 'users#login_user'
 
   get '/dashboard', to: 'users#show'
-  get '/users/:id/discover', to: 'users#discover'
+  get 'discover', to: 'users#discover'
   get '/users/:id/movies', to: 'movies#index'
   get '/users/:id/movies/:movie_id', to: 'movies#show'
 

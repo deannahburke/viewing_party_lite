@@ -14,12 +14,12 @@ RSpec.describe "Movie details/show page", type: :feature do
   end
 
   it 'discover page button routes to discover page', :vcr do
-
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
     visit "/users/#{@user1.id}/movies/238"
 
     click_button("Discover Page")
 
-    expect(current_path).to eq("/users/#{@user1.id}/discover")
+    expect(current_path).to eq("/discover")
   end
 
   it 'create viewing party button routes to new viewing party page', :vcr do
