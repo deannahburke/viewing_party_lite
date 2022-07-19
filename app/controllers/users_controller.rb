@@ -15,8 +15,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
-    @invited = ViewingParty.invited(@user)
+    # require "pry";binding.pry
+    if User.exists?
+      @user = current_user
+      @invited = ViewingParty.invited(@user)
+    else
+      flash[:error] = "You must be logged in or registered to access dashboard"
+      redirect_to "/"
+    end
   end
 
   def discover
@@ -37,6 +43,11 @@ class UsersController < ApplicationController
       flash[:error] = "Sorry, your credentials are bad"
       render :login_form
     end
+  end
+
+  def logout_user
+    session.destroy
+    redirect_to "/"
   end
 
   private
