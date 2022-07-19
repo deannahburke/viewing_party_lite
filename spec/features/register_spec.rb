@@ -24,7 +24,7 @@ RSpec.describe "User Registration Page", type: :feature do
     fill_in :password_confirmation, with: "test_password"
     click_button("Register")
 
-    expect(page).to have_current_path("/users/#{last_user.id + 1}")
+    expect(page).to have_current_path("/dashboard")
     expect(page).to_not have_content('Please enter a valid name and email address to register.')
   end
 
@@ -34,7 +34,7 @@ RSpec.describe "User Registration Page", type: :feature do
     fill_in :name, with: 'Sai Again'
     fill_in :email, with: 'SaiLent@overlord.com'
     click_button("Register")
-    
+
     expect(page).to have_current_path('/register')
     expect(page).to have_content("Email has already been taken")
   end

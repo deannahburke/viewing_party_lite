@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
+
   def new
   end
 
   def create
     user = User.create(user_params)
     if user.save
-      redirect_to "/users/#{user.id}"
+      session[:user_id] = user.id
+      redirect_to "/dashboard"
     else
       flash[:error] = user.errors.full_messages.first
       redirect_to "/register"
@@ -13,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user
     @invited = ViewingParty.invited(@user)
   end
 
@@ -27,7 +29,8 @@ class UsersController < ApplicationController
   def login_user
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
-      redirect_to "/users/#{user.id}"
+      session[:user_id] = user.id
+      redirect_to "/dashboard"
       flash[:success] = "Welcome, #{user.name}!"
     else
       flash[:error] = "Sorry, your credentials are bad"
