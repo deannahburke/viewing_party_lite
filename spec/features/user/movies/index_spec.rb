@@ -24,21 +24,21 @@ RSpec.describe "User Movie Results Page", type: :feature do
     end
 
     it 'has movie title links that lead to the correct path', :vcr do
-      visit "/users/#{@user2.id}/movies?q=top+20rated"
+      visit "/movies?q=top+20rated"
 
       click_link("The Godfather")
 
-      expect(page).to have_current_path("/users/#{@user2.id}/movies/238")
+      expect(page).to have_current_path("/movies/238")
     end
 
     it 'has the correct page title', :vcr do
-      visit "/users/#{@user2.id}/movies?q=top+20rated"
+      visit "/movies?q=top+20rated"
 
       expect(page).to have_content("Top Rated Movies")
     end
 
     it 'has a functioning button to return to the discover page', :vcr do
-      visit "/users/#{@user2.id}/movies?q=top+20rated"
+      visit "/movies?q=top+20rated"
 
       click_button("Discover Page")
       expect(page).to have_current_path("/discover")

@@ -103,7 +103,7 @@ RSpec.describe "User Dash/Show page", type: :feature do
 
       click_link("Spirited Away")
 
-      expect(page).to have_current_path("/users/#{@user2.id}/movies/#{@spirit.movie_id}")
+      expect(page).to have_current_path("/movies/#{@spirit.movie_id}")
     end
   end
 end
